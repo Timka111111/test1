@@ -40,10 +40,13 @@ public class Main {
         printMonsterInfo();
         do {
             int playerAction;
-            do {
-                System.out.println("Ход игрока 1 - Атаковать 2 - Защититься");
-                playerAction = sc.nextInt();
-            }while (playerAction < 1 || playerAction > 2);
+//            do {
+//
+//                System.out.println("Ход игрока 1 - Атаковать 2 - Защититься");
+//                playerAction = sc.nextInt();
+//            }while (playerAction < 1 || playerAction > 2);
+
+            playerAction = showUserAction("", "Атаковать", "Защититься");
 
             if(playerAction == 1) {
                 monsterHp -= heroAttack;
@@ -74,13 +77,16 @@ public class Main {
     }
 
     public static void travelPhrase() {
-        do {
-            System.out.println("1. Лес");
-            System.out.println("2. Пещера");
-            System.out.println("3. Горы");
-            travelDirection = sc.nextInt();
-        }while (travelDirection < 1 || travelDirection > 3);
+        travelDirection = showUserAction("", "Лес", "Пещера", "Горы");
+//        do {
+//            System.out.println("1. Лес");
+//            System.out.println("2. Пещера");
+//            System.out.println("3. Горы");
+//            travelDirection = sc.nextInt();
+//        }while (travelDirection < 1 || travelDirection > 3);
     }
+
+
 
     public static void generateMonster() {
         int n = random.nextInt(2);
@@ -111,13 +117,15 @@ public class Main {
     }
 
     public static void selectClass() {
-        do {
-            System.out.println("Представься пожалуйста, каково твое призвание");
-            System.out.println("1. Варвар");
-            System.out.println("2. Рыцарь");
-            System.out.println("3. Мудрец");
-            heroClass = sc.nextInt();
-        }while (heroClass < 1 || heroClass > 3);
+//        do {
+//            System.out.println("Представься пожалуйста, каково твое призвание");
+//            System.out.println("1. Варвар");
+//            System.out.println("2. Рыцарь");
+//            System.out.println("3. Мудрец");
+//            heroClass = sc.nextInt();
+//        }while (heroClass < 1 || heroClass > 3);
+        heroClass = showUserAction("Представься пожалуйста, каково твое призвание",
+                "Варвар", "Рыцарь", "Мудрец");
 
         switch (heroClass) {
             case 1:
@@ -139,5 +147,18 @@ public class Main {
     public static void selectName() {
         System.out.println("Вы начинаете свое путешетсвие. Введите свое имя");
         heroName = sc.nextLine();
+    }
+
+    public static int showUserAction(String question, String... variants) {
+        int userInput;
+        do {
+            System.out.println(question);
+            for (int i = 0; i < variants.length; i++) {
+                System.out.println((i + 1) + ". " + variants[i]);
+            }
+            userInput = sc.nextInt();
+        }while (userInput < 1 || userInput > variants.length);
+
+        return userInput;
     }
 }
