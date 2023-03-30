@@ -1,9 +1,8 @@
-package kz.timka;
+package kz.timka.dop;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
-
+// git bash
 public class XO {
     static char[][] map;
     static final int SIZE = 3;
@@ -58,38 +57,65 @@ public class XO {
     // 1 * * *
     // 2 * * *
     public static boolean checkWin(char dot) {
-        if(map[0][0] == dot && map[0][1] == dot && map[0][2] == dot) {
-            return true;
-        }
-        if(map[1][0] == dot && map[1][1] == dot && map[1][2] == dot) {
-            return true;
-        }
-        if(map[2][0] == dot && map[2][1] == dot && map[2][2] == dot) {
-            return true;
-        }
+        boolean firstDiagonal = true;
+        boolean secondDiagonal = true;
+        boolean horizontal;
+        boolean vertical;
 
-        if(map[0][0] == dot && map[1][0] == dot && map[2][0] == dot) {
-            return true;
+        for (int i = 0; i < SIZE; i++) {
+            firstDiagonal = (map[i][i] == dot) && firstDiagonal;
+            secondDiagonal = (map[i][SIZE - i - 1] == dot) && secondDiagonal;
         }
+        if(firstDiagonal || secondDiagonal) return true;
 
-        if(map[0][1] == dot && map[1][1] == dot && map[2][1] == dot) {
-            return true;
+        for (int i = 0; i < SIZE; i++) {
+            horizontal = true;
+            vertical = true;
+            for (int j = 0; j < SIZE; j++) {
+                horizontal = map[j][i] == dot && horizontal;
+                vertical = map[i][j] == dot && vertical;
+            }
+            if(vertical || horizontal) return true;
         }
-
-        if(map[0][2] == dot && map[1][2] == dot && map[2][2] == dot) {
-            return true;
-        }
-
-        if(map[0][0] == dot && map[1][1] == dot && map[2][2] == dot) {
-            return true;
-        }
-
-        if(map[2][0] == dot && map[1][1] == dot && map[0][2] == dot) {
-            return true;
-        }
-
 
         return false;
+
+
+
+
+
+//        if(map[0][0] == dot && map[0][1] == dot && map[0][2] == dot) {
+//            return true;
+//        }
+//        if(map[1][0] == dot && map[1][1] == dot && map[1][2] == dot) {
+//            return true;
+//        }
+//        if(map[2][0] == dot && map[2][1] == dot && map[2][2] == dot) {
+//            return true;
+//        }
+//
+//        if(map[0][0] == dot && map[1][0] == dot && map[2][0] == dot) {
+//            return true;
+//        }
+//
+//        if(map[0][1] == dot && map[1][1] == dot && map[2][1] == dot) {
+//            return true;
+//        }
+//
+//        if(map[0][2] == dot && map[1][2] == dot && map[2][2] == dot) {
+//            return true;
+//        }
+
+//        if(map[0][0] == dot && map[1][1] == dot && map[2][2] == dot) {
+//            return true;
+//        }
+//
+//        if(map[2][0] == dot && map[1][1] == dot && map[0][2] == dot) {
+//            return true;
+//        }
+
+
+   //     return false;
 
     }
 
@@ -105,6 +131,34 @@ public class XO {
     }
 
     public static void aiTurn() {
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(isCellEmpty(j, i)) {
+                    setSymbol(j, i, DOT_AI);
+                    if(checkWin(DOT_AI)) {
+                        return;
+                    }
+                    setSymbol(j,i, DOT_EMPTY);
+                }
+            }
+        } // ищет себе место для выигрыша
+
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if(isCellEmpty(j, i)) {
+                    setSymbol(j, i, DOT_PLAYER);
+                    if(checkWin(DOT_PLAYER)) {
+                        setSymbol(j,i,DOT_AI);
+                        return;
+                    }
+                    setSymbol(j, i, DOT_EMPTY);
+                }
+            }
+        }
+
+
         int x, y;
         do {
             x = random.nextInt(SIZE); // 0 1 2
@@ -112,6 +166,10 @@ public class XO {
         }while (!isCellEmpty(x, y));
         map[x][y] = DOT_AI;
         System.out.printf("Ход ИИ: x = %d, y = %d\n", (x + 1), (y + 1));
+    }
+
+    public static void setSymbol(int x, int y, char sym) {
+        map[x][y] = sym;
     }
 
     public static void playerTurn() {

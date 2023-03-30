@@ -1,4 +1,4 @@
-package kz.timka;
+package kz.timka.dop;
 
 import java.util.Arrays;
 import java.util.Random;
