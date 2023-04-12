@@ -1,5 +1,7 @@
 package kz.timka.dop.hw2;
 
+import java.util.Objects;
+
 public class Cat extends Animal {
 
     public Cat(String name) {
@@ -8,6 +10,5 @@ public class Cat extends Animal {
         this.maxSwimDistance = 0;
         this.type = "cat";
     }
-
 
 }

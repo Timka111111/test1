@@ -1,7 +1,5 @@
 package kz.timka.today.example2.enums;
 
-import kz.timka.today.example2.Animal;
-
 public enum SummerMonth {
     JUNE(6), JULY(7), AUGUST(8);
 
