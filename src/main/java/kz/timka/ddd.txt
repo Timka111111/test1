@@ -1,9 +1,0 @@
-List<? super T> dest, List<? extends T> src
-                (animal)                (Cat)
-                (cat)                   (animal)
-T = Cat
-T = Animal
-
-
-
-

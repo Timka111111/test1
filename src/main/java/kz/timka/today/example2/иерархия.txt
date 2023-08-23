@@ -1,9 +1,0 @@
-Iterable
-Collection
-List, Map, Set, Queue
-FIFO - first in first out
-
-AbstractQueue
-offer()
-poll()
-peek()
